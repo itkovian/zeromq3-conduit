@@ -1,4 +1,4 @@
-{- zeromq3-conduit - Conduit bindings for zeromq3-haskell
+{- zeromq4-conduit - Conduit bindings for zeromq4-haskell
  -
  - Copyright (C) 2012  Nicolas Trangez
  -
@@ -23,7 +23,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
--- | A monad to ease working with "System.ZMQ3", hiding the 'Context'
+-- | A monad to ease working with "System.ZMQ4", hiding the 'Context'
 -- object in a 'ReaderT' environment.
 --
 -- Example usage:
@@ -36,7 +36,7 @@
 -- >         msg <- receive s
 -- >         liftIO $ print msg
 
-module System.ZMQ3.Monad (
+module System.ZMQ4.Monad (
     -- * Monad type and evaluation
       ZMQ
     , runZMQ
@@ -45,7 +45,7 @@ module System.ZMQ3.Monad (
     -- * Socket creation
     , makeSocket
 
-    -- * Lifted versions of some System.ZMQ3 actions
+    -- * Lifted versions of some System.ZMQ4 actions
     -- ** Socket handling
     , bind
     , connect
@@ -60,7 +60,7 @@ module System.ZMQ3.Monad (
     , subscribe
     , unsubscribe
 
-    -- * Re-exports from System.ZMQ3
+    -- * Re-exports from System.ZMQ4
     , Size
     , Flag(..)
     , Push(..), Pull(..), Router(..), Dealer(..), Rep(..), Req(..), XSub(..), XPub(..), Sub(..), Pub(..), Pair(..)
@@ -86,9 +86,9 @@ import Data.List.NonEmpty (NonEmpty)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
 
-import System.ZMQ3
+import System.ZMQ4
     (Size, Flag, Push, Pull, Router, Dealer, Rep, Req, XSub, XPub, Sub, Pub, Pair)
-import qualified System.ZMQ3 as ZMQ
+import qualified System.ZMQ4 as ZMQ
 
 #ifdef DEMO
 import Control.Monad.Trans.Resource (runResourceT)
@@ -113,7 +113,7 @@ runZMQ :: (MonadIO m, MonadBaseControl IO m) => Size -- ^ Number of 'ioThreads' 
 runZMQ ioThreads act =
     bracket
         (liftIO ZMQ.context)
-        (liftIO . ZMQ.destroy)
+        (liftIO . ZMQ.term)
         (\ctx -> do
             liftIO $ ZMQ.setIoThreads ioThreads ctx
             runReaderT (unZMQ act) ctx)

@@ -1,6 +1,7 @@
-{- zeromq3-conduit - Conduit bindings for zeromq3-haskell
+{- zeromq4-conduit - Conduit bindings for zeromq4-haskell
  -
  - Copyright (C) 2012  Nicolas Trangez
+ - Copyright (C) 2017  Andy Georges
  -
  - This library is free software; you can redistribute it and/or
  - modify it under the terms of the GNU Lesser General Public
@@ -20,10 +21,10 @@
 {-# LANGUAGE Rank2Types #-}
 
 -- | This module implements interfaces between "Data.Conduit" and
--- "System.ZMQ3", so ZeroMQ 'ZMQ.Socket's can be used as 
+-- "System.ZMQ3", so ZeroMQ 'ZMQ.Socket's can be used as
 -- 'Source's and 'Sink's in Conduit-based applications.
 
-module Data.Conduit.ZMQ3 (
+module Data.Conduit.ZMQ4 (
     -- * Conduit Sources from ZMQ Sockets
       zmqSource
     , zmqSourceMulti
@@ -43,8 +44,8 @@ import qualified Data.ByteString.Lazy as LBS
 
 import Data.Conduit
 
-import qualified System.ZMQ3 as ZMQ (Receiver, Sender, Socket)
-import qualified System.ZMQ3.Monad as ZMQ
+import qualified System.ZMQ4 as ZMQ (Receiver, Sender, Socket)
+import qualified System.ZMQ4.Monad as ZMQ
 
 -- Sources
 zmqSourceGeneric :: Monad m => (s -> m a) -> s -> Source m a
